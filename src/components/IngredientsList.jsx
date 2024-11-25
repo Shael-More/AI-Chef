@@ -9,7 +9,7 @@ export default function IngredientsList(props) {
       </ul>
       {props.ingredients.length > 3 && (
         <div className='flex text-sm bg-slate-200 p-5 justify-between rounded-lg items-center max-w-lg mx-auto'>
-          <div className='space-y-5 '>
+          <div ref={props.ref} className='space-y-5 '>
             <h3 className='font-bold text-lg '>Ready for a recipe?</h3>
             <p className='text-gray-500 text-sm'>
               Generate a recipe from your list of ingredients
@@ -17,7 +17,7 @@ export default function IngredientsList(props) {
           </div>
 
           <button
-            onClick={props.toggleRecipeShown}
+            onClick={props.getRecipe}
             className='bg-[#6f6866] text-base text-white p-2 rounded-md'
           >
             Get a recipe
@@ -27,3 +27,4 @@ export default function IngredientsList(props) {
     </section>
   );
 }
+

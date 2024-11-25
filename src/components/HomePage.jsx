@@ -1,19 +1,22 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import ClaudeRecipe from './ClaudeRecipe';
 import IngredientsList from './IngredientsList';
-
+import { getRecipeFromMistral } from '../ai';
 const HomePage = () => {
-  const [ingredients, setIngredients] = useState([
-    'all the main spices',
-    'pasta',
-    'ground nuts',
-    'tomato paste',
-  ]);
+  const [ingredients, setIngredients] = useState([]);
 
-  const [recipeShown, setRecipeShown] = useState(false);
+  const [recipe, setRecipe] = useState('');
+  const recipeSection = useRef(null);
 
-  function toggleRecipeShown() {
-    setRecipeShown((prevState) => !prevState);
+  useEffect(() => {
+    if (recipe !== '' && recipeSection.current !== null) {
+      recipeSection.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [recipe]);
+
+  async function getRecipe() {
+    const recipeMarkdown = await getRecipeFromMistral(ingredients);
+    setRecipe(recipeMarkdown);
   }
 
   function handleSubmit(e) {
@@ -47,11 +50,12 @@ const HomePage = () => {
       </form>
       {ingredients.length > 0 && (
         <IngredientsList
+          ref={recipeSection}
           ingredients={ingredients}
-          toggleRecipeShown={toggleRecipeShown}
+          getRecipe={getRecipe}
         />
       )}
-      {recipeShown && <ClaudeRecipe />}
+      {recipe && <ClaudeRecipe recipe={recipe} />}
     </main>
   );
 };

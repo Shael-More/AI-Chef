@@ -1,18 +1,19 @@
 // import { useState } from 'react';
 // import AddItem from './components/AddItem';
 import Header from './components/Header';
-import Main from './components/Main';
-
+import HomePage from './components/HomePage';
 export default function App() {
   // const [itemList, setItemList] = useState([]);
 
   // function addToList(title) {
   //   setItemList((prevList) => [...prevList, title]);
+  // let api = import.meta.env.VITE_API_KEY
+  // console.log(api)
   // }
   return (
     <>
       <Header />
-      <Main />
+      <HomePage />
       {/* <main className='border p-2 rounded-md bg-[#fafaf8]'>
         <AddItem onsubmit={addToList} />
 
